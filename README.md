@@ -112,9 +112,7 @@
       </form>
     </body>
 </html>
-</body>
-</html>
-    
+
     
 <script> 
   function validateAndGetFormData() {
@@ -142,37 +140,11 @@ empName: empNameVar,
 empEmail: empEmailVar,
 };
 return JSON.stringify(jsonStrObj);
-}
-// This method is used to create PUT Json request.
-function createPUTRequest(connToken, jsonObj, dbName, relName) {
-var putRequest = "{\n"
-+ "\"token\" : \""
-+ connToken
-+ "\","
-+ "\"dbName\": \""
-+ dbName
-+ "\",\n" + "\"cmd\" : \"PUT\",\n"
-+ "\"rel\" : \""
-+ relName + "\","
-+ "\"jsonStr\": \n"
-+ jsonObj
-+ "\n"
-+ "}";
-return putRequest;
-}
-
+}  
     
+ 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    function SaveEmployee{}{
+function SaveEmployee{}{
 var putReqStr = createPUTRequest("90935586|-31948841969445468|90933720",
 jsonStr, "SAMPLE", "EMP-REL");
 alert(putReqStr);
@@ -185,4 +157,6 @@ resetForm();
 }
 </script>
 
+</body>    
+</html>
 
