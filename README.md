@@ -114,5 +114,75 @@
 </html>
 </body>
 </html>
+    
+    
+<script> 
+  function validateAndGetFormData() {
+var empIdVar = $("#empId").val();
+if (empIdVar === "") {
+alert("Employee ID Required Value");
+$("#empId").focus();
+return "";
+}
+var empNameVar = $("#empName").val();
+if (empNameVar === "") {
+alert("Employee Name is Required Value");
+$("#empName").focus();
+return "";
+}
+var empEmailVar = $("#empEmail").val();
+if (empEmailVar === "") {
+alert("Employee Email is Required Value");
+$("#empEmail").focus();
+return "";
+}
+var jsonStrObj = {
+empId: empIdVar,
+empName: empNameVar,
+empEmail: empEmailVar,
+};
+return JSON.stringify(jsonStrObj);
+}
+// This method is used to create PUT Json request.
+function createPUTRequest(connToken, jsonObj, dbName, relName) {
+var putRequest = "{\n"
++ "\"token\" : \""
++ connToken
++ "\","
++ "\"dbName\": \""
++ dbName
++ "\",\n" + "\"cmd\" : \"PUT\",\n"
++ "\"rel\" : \""
++ relName + "\","
++ "\"jsonStr\": \n"
++ jsonObj
++ "\n"
++ "}";
+return putRequest;
+}
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    function SaveEmployee{}{
+var putReqStr = createPUTRequest("90935586|-31948841969445468|90933720",
+jsonStr, "SAMPLE", "EMP-REL");
+alert(putReqStr);
+jQuery.ajaxSetup({async: false});
+var resultObj = executeCommand(putReqStr,
+"http://api.login2explore.com:5577", "/api/iml");
+alert(JSON.stringify(resultObj));
+jQuery.ajaxSetup({async: true});
+resetForm();
+}
+</script>
 
 
