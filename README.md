@@ -1,5 +1,4 @@
 # Json-Project
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>form</title>
+
 </head>
 <body>
   <html>
@@ -15,6 +15,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
         <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
         <link href='custom.css' rel='stylesheet' type='text/css'>
     </head>
@@ -30,19 +31,16 @@
 
                     <p class="lead">Your suggestions are precious to us.</p>
 
-                    <!-- We're going to place the form here in the next step -->
-                    <form></form> 
-
                 </div>
 
             </div>
 
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js" integrity="sha256-dHf/YjH1A4tewEsKUSmNnV05DDbfGN3g7NMq86xgGh8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>        
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js" integrity="sha256-dHf/YjH1A4tewEsKUSmNnV05DDbfGN3g7NMq86xgGh8=" crossorigin="anonymous"></script>
         <script src="contact.js"></script>
 
         <form id="contact-form" method="post" action="/form" role="form">
@@ -110,40 +108,100 @@
           </div>
       
       </form>
-    </body>
-</html>
 
     
 <script> 
-  function validateAndGetFormData() {
-var empIdVar = $("#empId").val();
-if (empIdVar === "") {
-alert("Employee ID Required Value");
+
+$("# Firstname ").focus();
+function validateAndGetFormData() {
+var FirstnameVar = $("# Firstname ").val();
+if (Firstname Var === "") {
+alert("Firstname Required Value");
 $("#empId").focus();
 return "";
 }
-var empNameVar = $("#empName").val();
-if (empNameVar === "") {
-alert("Employee Name is Required Value");
-$("#empName").focus();
+
+
+
+var Lastname Var = $("# Lastname ").val();
+if (Lastname Var === "") {
+alert("Lastname is Required Value");
+$("# Lastname ").focus();
 return "";
 }
-var empEmailVar = $("#empEmail").val();
-if (empEmailVar === "") {
+
+
+var EmailVar = $("#Email").val();
+if (EmailVar === "") {
 alert("Employee Email is Required Value");
-$("#empEmail").focus();
+$("#Email").focus();
 return "";
 }
+
+var mobileVar = $("# mobile ").val();
+if (mobileVar === "") {
+alert("Employee mobile is Required Value");
+$("# mobile ").focus();
+return "";
+}
+
+
+var MessageVar = $("# Message ").val();
+if (MessageVar === "") {
+alert("Employee Message is Required Value");
+$("# Message ").focus();
+return "";
+}
+
+
 var jsonStrObj = {
-empId: empIdVar,
-empName: empNameVar,
-empEmail: empEmailVar,
+Firstname: FirstnameVar,
+Lastname: Lastname Var,
+Email: EmailVar,
+mobile: mobileVar,
+Message: MessageVar,
+
 };
 return JSON.stringify(jsonStrObj);
 }  
-    
- 
-    
+
+
+
+function createPUTRequest(connToken, jsonObj, dbName, relName) {
+var putRequest = "{\n"
++ "\"token\" : \""
++ connToken
++ "\","
++ "\"dbName\": \""
++ dbName
++ "\",\n" + "\"cmd\" : \"PUT\",\n"
++ "\"rel\" : \""
++ relName + "\","
++ "\"jsonStr\": \n"
++ jsonObj
++ "\n"
++ "}";
+return putRequest;
+}
+
+function executeCommand(reqString, dbBaseUrl, apiEndPointUrl) {
+var url = dbBaseUrl + apiEndPointUrl;
+var jsonObj;
+$.post(url, reqString, function (result) {
+jsonObj = JSON.parse(result);
+}).fail(function (result) {
+var dataJsonObj = result.responseText;
+jsonObj = JSON.parse(dataJsonObj);
+});
+return jsonObj;
+}
+
+function resetForm() {
+$("#Firstname").val("")
+$("#Lastname").val("");
+$("#Email").val("");
+$("#mobile").val("");
+$("# Message ").focus();   
 function SaveEmployee{}{
 var putReqStr = createPUTRequest("90935586|-31948841969445468|90933720",
 jsonStr, "SAMPLE", "EMP-REL");
@@ -156,7 +214,6 @@ jQuery.ajaxSetup({async: true});
 resetForm();
 }
 </script>
-
 </body>    
 </html>
 
