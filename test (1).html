@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Test Json</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: lightblue">
+<div class="container">
+<h1 style="text-align: center;">Registration Form</h1>
+<form id="empForm" method="post">
+<div class="form-group">
+<span><label for="firstName">FirstName :</label> <label id="firstNameMsg">
+</label></span>
+<input type="text" class="form-control" name="firstName" id="firstName" placeholder="Enter Employee ID" required>
+</div>
+<div class="form-group">
+<label for="lastName">Lastname : </label>
+<input type="text" class="form-control" id="lastName" placeholder="Enter Employee Name" name="lastName">
+</div>
+<div class="form-group">
+<label for="Email">Email :</label>
+<input type="email" class="form-control" id="Email" placeholder="Enter Employee Email" name="Email">
+</div>
+<div class="form-group">
+<label for="mobno">Mobile No :</label>
+<input type="number" class="form-control" id="Email" placeholder="+9143343434..." name="Email">
+</div>
+<input type="button" class="btn btn-primary" id="empSave" value="Submit" onclick="saveEmployee();">
+</form>
+</div>
+
+<script>
+$("#firstName").focus();
+function validateAndGetFormData(){var firstNameVar = $("#firstName").val(); if (firstNameVar === "") {
+alert("Employee ID Required Value");
+$("#firstName").focus(); return "";
+}
+
+var lastNameVar = $("#lastName").val(); if (lastNameVar === "") {
+alert("Employee Name is Required Value");
+$("#lastName").focus(); return "";
+}
+
+var EmailVar = $("#Email").val(); if (EmailVar === "") {
+alert("Employee Email is Required Value");
+$("#Email").focus(); return "";
+}
+var mobnoVar = $("#mobno").val(); if (mobnoVar === "") {
+alert("Employee Mobile is Required Value");
+$("#mobno").focus(); return "";
+}
+var jsonStrObj = {
+firstName: firstNameVar, lastName: lastNameVar, Email: EmailVar,MobileNo: mobnoVar,
+};
+
+return JSON.stringify(jsonStrObj);
+}
+
+// This method is used to create PUT Json request.
+function createPUTRequest(connToken, jsonObj, dbName, relName) { var putRequest = "{\n"
++ "\"token\" : \""
++ connToken
++ "\","
++ "\"dbName\": \""
++ dbName
++ "\",\n" + "\"cmd\" : \"PUT\",\n"
++ "\"rel\" : \""
++ relName + "\","
++ "\"jsonStr\": \n"
++ jsonObj
++ "\n"
++ "}";
+return putRequest;
+}
+
+function executeCommand(reqString, dbBaseUrl, apiEndPointUrl) { var url = dbBaseUrl + apiEndPointUrl;
+var jsonObj;
+$.post(url, reqString, function (result) { jsonObj = JSON.parse(result);
+}).fail(function (result) {
+var dataJsonObj = result.responseText; jsonObj = JSON.parse(dataJsonObj);
+});
+return jsonObj;
+}
+
+function resetForm() {
+$("#firstName").val("")
+$("#lastName").val("");
+$("#Email").val("");
+$("#mobno").val("");
+$("#firstName").focus();
+}
+
+function saveEmployee() {
+var jsonStr = validateAndGetFormData(); if (jsonStr === "") {
+return;
+}
+
+var putReqStr = createPUTRequest("90935586|-31948841969445468|90933720", jsonStr, "SAMPLE", "EMP-REL");
+alert(putReqStr); jQuery.ajaxSetup({async: false});
+var resultObj = executeCommand(putReqStr, "http://api.login2explore.com:5577", "/api/iml");
+alert(JSON.stringify(resultObj)); jQuery.ajaxSetup({async: true});
+resetForm();
+}
+
+</script>
+
+</body>
+</html>
